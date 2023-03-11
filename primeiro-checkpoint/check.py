@@ -30,6 +30,27 @@ contornos, _ = cv2.findContours(mask_total, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMP
 #desenha os contornos na imagem
 cv2.drawContours(contornos_img, contornos, -1, [255, 0, 0], 5)
 
+#tamanho e cor da cruz
+size = 20
+color = (115,251,253)
+count = 0
+for contorno in contornos:
+    cnt = contornos[count]
+    M = cv2.moments(cnt)
+    #centro das formas
+    cx = int(M['m10']/M['m00'])
+    cy = int(M['m01']/M['m00'])
+    #desenhar a cruz
+    cv2.line(contornos_img,(cx - size,cy),(cx + size,cy),color,5)
+    cv2.line(contornos_img,(cx,cy - size),(cx, cy + size),color,5)
+    # Escrever a massa
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    text = cy , cx
+    origem = (cx - 100,cy - 100)
+    cv2.putText(contornos_img, str(text), origem, font,1,(200,50,0),2,cv2.LINE_AA)
+    count += 1
+
+
 #mostra as imagens
 plt.imshow(contornos_img)
 plt.show()
