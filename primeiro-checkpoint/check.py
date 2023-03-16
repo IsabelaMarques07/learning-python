@@ -8,7 +8,21 @@ import numpy as np
 #plt.imshow(contornos_img)
 #plt.show()
 
-def image_da_webcam(img):
+from pynput.keyboard import Key, Controller
+import pynput
+import time
+import random
+
+keys = [
+    pynput.keyboard.KeyCode.from_char('w'),
+    pynput.keyboard.KeyCode.from_char('s'),
+    pynput.keyboard.KeyCode.from_char('a'),
+    pynput.keyboard.KeyCode.from_char('d'),
+]
+
+
+def image_da_webcam(img_original):
+    img = cv2.flip(img_original, 1)
     """
     ->>> !!!! FECHE A JANELA COM A TECLA ESC !!!! <<<<-
         deve receber a imagem da camera e retornar uma imagems filtrada.
@@ -28,8 +42,8 @@ def image_da_webcam(img):
     mask_hsv = cv2.dilate(mask_hsv, None, iterations=20)
 
     #máscara do contorno do amarelo
-    image_lower_hsv2 = np.array([20, 230, 250])
-    image_upper_hsv2 = np.array([60, 255, 255])
+    image_lower_hsv2 = np.array([40, 180, 180])
+    image_upper_hsv2 = np.array([70, 255, 255])
     mask_hsv2 = cv2.inRange(img_hsv, image_lower_hsv2, image_upper_hsv2)
     mask_hsv2 = cv2.erode(mask_hsv2, None, iterations=20)
     mask_hsv2 = cv2.dilate(mask_hsv2, None, iterations=20)
@@ -94,8 +108,27 @@ def image_da_webcam(img):
                 rad = math.atan2(dy, dx)
                 angulo = math.degrees(rad)
                 posicao = (10, 20)
-                if angulo < 0:
-                    angulo += 360
+                #if angulo < 0:
+                #    angulo += 360
+
+                keyboard = Controller()
+                if angulo > 10  and angulo < 40:
+                    keyboard.press(keys[3]) #D
+                    time.sleep(0.1)
+                    keyboard.release(keys[3])
+                if angulo > -3 and angulo < 10:
+                    keyboard.press(keys[0])#W
+                    time.sleep(0.1)
+                    keyboard.release(keys[0])
+                if angulo > 180 and angulo < 190:
+                    keyboard.press(keys[0]) #W
+                    time.sleep(0.1)
+                    keyboard.release(keys[0])
+                if angulo > 115 and angulo < 180:
+                    keyboard.press(keys[2])
+                    time.sleep(0.1)
+                    keyboard.release(keys[2])
+
                     
                 cv2.putText(img, "angulo: "+str(angulo), posicao, font,0.6,(200,50,0),1,cv2.LINE_AA)
 
@@ -113,7 +146,6 @@ else:
 while rval:
     
     img = image_da_webcam(frame)
-
 
     cv2.imshow("preview", img)
 
