@@ -96,9 +96,8 @@ def image_da_webcam(img_original):
             area = cv2.contourArea(contorno)
             cv2.putText(img, "posicao: "+str(text), origem_posicao, font,0.65,(200,50,0),1,cv2.LINE_AA)
             cv2.putText(img, "area: "+str(area), origem_area, font,0.65,(200,50,0),1,cv2.LINE_AA)
-            print(len(coordenadasX))
+            keyboard = Controller()
             if (len(coordenadasX) > 1):
-                print("aqui")
                 color = (250,120,230)
                 cv2.line(img,(coordenadasX[0],coordenadasY[0]),(coordenadasX[1], coordenadasY[1]),color,5)
                 #calcular o ângulo de inclinação
@@ -111,11 +110,14 @@ def image_da_webcam(img_original):
                 #if angulo < 0:
                 #    angulo += 360
 
-                keyboard = Controller()
+
+                print(len(contornos))
                 if angulo > 10  and angulo < 40:
                     keyboard.press(keys[3]) #D
+                    keyboard.press(keys[0])#W
                     time.sleep(0.1)
                     keyboard.release(keys[3])
+                    keyboard.release(keys[0])
                 if angulo > -3 and angulo < 10:
                     keyboard.press(keys[0])#W
                     time.sleep(0.1)
@@ -125,12 +127,19 @@ def image_da_webcam(img_original):
                     time.sleep(0.1)
                     keyboard.release(keys[0])
                 if angulo > 115 and angulo < 180:
-                    keyboard.press(keys[2])
+                    keyboard.press(keys[2])#A
+                    keyboard.press(keys[0])#W
                     time.sleep(0.1)
                     keyboard.release(keys[2])
+                    keyboard.release(keys[0])
+                    cv2.putText(img, "angulo: "+str(angulo), posicao, font,0.6,(200,50,0),1,cv2.LINE_AA)
+            if len(contornos) < 2 and len(contornos) > 0:
+                keyboard.press(keys[1])#S
+                time.sleep(0.1)
+                
+                keyboard.release(keys[1])
 
-                    
-                cv2.putText(img, "angulo: "+str(angulo), posicao, font,0.6,(200,50,0),1,cv2.LINE_AA)
+               
 
     return img
 
