@@ -1,0 +1,28 @@
+// C++ code
+//
+void setup()
+{
+  Serial.begin(9600);
+  Serial.println("Digite 2 números separados por espaço: ");
+}
+
+int num1, num2;
+
+void loop()
+{
+  if(Serial.available()){
+   num1 = Serial.parseInt();
+    if(Serial.read()== ' '){
+    	num2 = Serial.parseInt();
+      
+      Serial.print("Número 1: ");
+      Serial.println(num1);
+      Serial.print("Número 2: ");
+      Serial.println(num2);
+    }
+  
+  }
+  
+  
+  
+}

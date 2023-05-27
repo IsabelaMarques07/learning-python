@@ -1,0 +1,28 @@
+// C++ code
+//
+void setup()
+{
+  Serial.begin(9600);
+  Serial.println("Digite um numero inteiro: ");
+}
+
+int num1, atual, anterior, anterior2;
+
+void loop()
+{
+  if(Serial.available()){
+    num1 = Serial.parseInt();
+    atual = 1;
+    anterior = 0;
+    anterior2 = 0;
+  	for(int i = 1; i < num1 ; i++){
+  		Serial.println(atual);
+      	anterior2 = anterior;  
+      	anterior = atual;
+      	atual = anterior + anterior2;
+  	}
+  }
+  
+  
+  
+}

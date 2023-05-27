@@ -1,0 +1,59 @@
+// C++ code
+//
+void setup()
+{
+  Serial.begin(9600);
+  Serial.println("Digite a quantidade de numeros que vai receber: ");
+}
+
+int soma = 0;
+int maior, menor;
+int quantidade;
+
+void loop()
+{
+  if(Serial.available()){
+    quantidade = Serial.parseInt();
+    
+   	int numeros[quantidade];
+    int i = 0;
+    while(i < quantidade){
+    	Serial.println("Digite um número inteiro: ");
+      	while(!Serial.available()){
+      		delay(1);
+      	}
+      	if(Serial.available()){
+      		numeros[i] = Serial.parseInt();
+          	soma = soma + numeros[i];
+          if(i == 0){
+          	maior = numeros[i];
+            menor = numeros[i];
+          }
+          if(numeros[i] > maior){
+          	maior = numeros[i];
+          }
+          if(numeros[i] < menor){
+          	menor = numeros[i];
+          }
+          i++;
+        }
+    }
+    
+      
+  Serial.print("Soma: ");
+  Serial.println(soma);
+  Serial.print("Média: ");
+  Serial.println(soma/quantidade);
+  Serial.print("Menor: ");
+  Serial.println(menor);
+  Serial.print("Maior: ");
+  Serial.println(maior);
+    
+  }
+
+  
+}  
+
+  
+
+  

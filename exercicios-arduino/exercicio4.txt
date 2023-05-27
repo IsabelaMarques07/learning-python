@@ -1,0 +1,31 @@
+// C++ code
+//
+void setup()
+{
+  Serial.begin(9600);
+  Serial.println("Digite um numero inteiro: ");
+}
+
+int num1;
+
+void loop()
+{
+  if(Serial.available()){
+   num1 = Serial.parseInt();
+    if(num1%2 == 0){
+    	Serial.println("Numero digitado eh par");
+     	Serial.println(num1);
+    }else{
+      Serial.println("Numero digitado eh impar");
+      Serial.println(num1);
+    }
+    if(num1 >= 0){
+    	Serial.println("Numero digitado eh positivo");
+    }else{
+      Serial.println("Numero digitado eh negativo");
+    }
+  }
+  
+  
+  
+}

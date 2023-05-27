@@ -1,0 +1,46 @@
+// C++ code
+//
+void setup()
+{
+  Serial.begin(9600);
+  Serial.println("Digite a temperatura: ");
+}
+
+bool primeiraLeitura = true;
+double temp;
+char tipo;
+void loop()
+{
+ 
+  if(Serial.available()){
+    if(primeiraLeitura){
+    	temp = Serial.parseInt();
+      	primeiraLeitura = false;
+      	Serial.println("Para converter para Celsius, digite c. Para Fahrenheit, f: ");
+    }else{
+    	tipo = Serial.read();
+      	if(tipo == 'c'){
+    		convertFtoC(temp);
+    	}else{
+    		convertCtoF(temp);
+    	}
+      
+    }
+  delay(1000);	
+	
+ }
+}  
+
+void convertCtoF(double temp){
+    Serial.println("convertendo para Fahrenheit: ");
+  	double fa = (temp * 9/5) + 32;
+    Serial.println(fa);
+} 
+void convertFtoC(double temp){
+    Serial.println("convertendo para Celsius: ");
+  	double ce = (temp - 32) * 5/9;
+    Serial.println(ce);
+}
+  
+
+  
